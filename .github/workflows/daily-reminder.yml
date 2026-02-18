@@ -22,6 +22,18 @@ jobs:
       - name: Install dependencies
         run: pip install requests beautifulsoup4 lxml anthropic google-genai
 
+      - name: Debug secrets availability
+        run: |
+          echo "GEMINI_API_KEY length: ${#GEMINI_API_KEY}"
+          echo "ANTHROPIC_API_KEY length: ${#ANTHROPIC_API_KEY}"
+          echo "NOTION_TOKEN length: ${#NOTION_TOKEN}"
+          echo "NOTION_PARENT_PAGE_ID length: ${#NOTION_PARENT_PAGE_ID}"
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+          NOTION_PARENT_PAGE_ID: ${{ secrets.NOTION_PARENT_PAGE_ID }}
+
       - name: Run reminder script
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
