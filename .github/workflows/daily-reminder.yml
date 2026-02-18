@@ -2,8 +2,8 @@ name: Daily Study Reminder
 
 on:
   schedule:
-    # 매일 오전 9시 KST (= UTC 00:00)
-    - cron: '0 0 * * *'
+    # 월/수/금 오전 9시 KST (= UTC 00:00)
+    - cron: '0 0 * * 1,3,5'
   workflow_dispatch: # 수동 실행도 가능
 
 jobs:
@@ -20,10 +20,11 @@ jobs:
           python-version: '3.11'
 
       - name: Install dependencies
-        run: pip install requests beautifulsoup4 anthropic
+        run: pip install requests beautifulsoup4 anthropic google-genai
 
       - name: Run reminder script
         env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
           NOTION_PARENT_PAGE_ID: ${{ secrets.NOTION_PARENT_PAGE_ID }}
